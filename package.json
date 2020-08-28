@@ -15,18 +15,26 @@
   "dependencies": {
     "css-loader": "^4.2.2",
     "file-loader": "^6.0.0",
+    "postcss-cli": "^7.1.1",
+    "postcss-import": "^12.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "style-loader": "^1.2.1"
+    "style-loader": "^1.2.1",
+    "tailwindcss": "^1.7.5",
+    "three": "^0.120.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "autoprefixer": "^9.8.6",
     "babel-loader": "^8.1.0",
     "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.11.0",
     "path": "^0.12.7",
+    "postcss": "^7.0.32",
+    "postcss-loader": "^3.0.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
