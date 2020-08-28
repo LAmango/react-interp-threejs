@@ -1,8 +1,11 @@
 import { SceneManager } from "./SceneManager";
+import { OrthoSM } from "./OrthoSM";
 
 export default containerElement => {
+  console.log("threeentrypoint")
+  let _running = false;
   const canvas = createCanvas(document, containerElement);
-  const sceneManger = new SceneManager(canvas);
+  const sceneManger = new OrthoSM(canvas);
 
   bindEventListeners();
   render();
@@ -28,10 +31,22 @@ export default containerElement => {
     sceneManger.onWindowResize();
   }
 
+  function start() {
+    _running = true;
+    render();
+  }
+
+  function stop() {
+    _running = false;
+    cancelAnimationFrame(render);
+  }
+
   function render() {
+    if (!_running) return;
+
     requestAnimationFrame(render);
     sceneManger.update();
   }
 
-  return sceneManger;
+  return {sceneManger, start, stop};
 };

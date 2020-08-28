@@ -1,30 +1,43 @@
 import React from 'react';
 import threeEntryPoint from "./threejs/threeEntryPoint";
 import Cube from "./components/cube";
-
-const SceneMangerContext = React.createContext({});
+import ElementContainer from "./components/ElementContainer";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cubeIsAdded: false
+    }
+  }
   componentDidMount() {
-      this.sm = threeEntryPoint(this.threeRootElement);
-    console.log(this.sm)
+    this.sm = threeEntryPoint(this.containerElement)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    this.sm.sceneManger.onAppDidUpdate(prevProps, prevState, this.props, this.state);
+  }
+
+  addCube = () => {
+    this.sm.start();
+    this.setState({
+      cubeIsAdded: true
+    })
+  };
 
   render() {
+    console.log(this.sm)
         return(
-          <SceneMangerContext.Provider value={{orthoCube: this.sm ? this.sm.sceneSubjects.orthoCube: {}}}>
             <div className="w-full h-full flex">
-              <Cube/>
+              <div className="w-1/6 bg-gray-500">polygons
+                <button onClick={this.addCube}>Add cube</button>
+              </div>
               <div className="w-5/6">
-                <div ref={element => this.threeRootElement = element} className="w-full h-full"/>
+                <div ref={element => this.containerElement = element} className="w-full h-full"/>
               </div>
             </div>
-          </SceneMangerContext.Provider>
         );
     }
 }
-
-export const SceneManagerConsumer = SceneMangerContext.Consumer;
 
 export default App
