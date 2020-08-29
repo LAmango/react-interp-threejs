@@ -28,6 +28,7 @@ export default containerElement => {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
+
     sceneManger.onWindowResize();
   }
 

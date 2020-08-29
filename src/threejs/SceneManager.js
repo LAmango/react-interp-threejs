@@ -21,13 +21,16 @@ export class SceneManager {
     this.renderer.setSize(this.screenDimensions.width, this.screenDimensions.height);
 
     // set up camera
+    this.camera = this.setUpCamera(this.canvas);
+  }
+
+  setUpCamera = (canvas) => {
     const aspectRatio = this.canvas.width / this.canvas.height;
     const fov = 60;
     const nearPlane = 1;
     const farPlane = 100;
-    this.camera = new THREE.PerspectiveCamera(fov, aspectRatio, nearPlane, farPlane);
-    this.camera.position.z = 5;
-  }
+    return new THREE.PerspectiveCamera(fov, aspectRatio, nearPlane, farPlane);
+  };
 
   update = () => {
     const elapsedTime = this.clock.getElapsedTime();

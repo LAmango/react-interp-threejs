@@ -1,5 +1,6 @@
 import {SceneManager} from "./SceneManager";
 import OrthCube from "./sceneSubjects/OrthoCube";
+import * as THREE from "three";
 
 
 export class OrthoSM extends SceneManager {
@@ -8,7 +9,16 @@ export class OrthoSM extends SceneManager {
     this.sceneSubjects = {
       orthoCube: new OrthCube(this.scene)
     }
+    this.camera = this.setUpCamera(canvas);
   }
+
+  setUpCamera = (canvas) => {
+    const camera = new THREE.OrthographicCamera(-1,1, canvas.width/canvas.height, -canvas.width/canvas.height, 0, 1000)
+    camera.position.fromArray([1,1,1]);
+    camera.up.fromArray([0,0,1]);
+    return camera;
+  };
+
 
   _traverse = (fn, ...args) => {
     Object.values(this.sceneSubjects).map(child => {
