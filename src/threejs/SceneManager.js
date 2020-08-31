@@ -12,10 +12,10 @@ export class SceneManager {
 
     // set up scene
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color("#c4c4c4");
 
     // set up renderer
-    this.renderer = new THREE.WebGL1Renderer({canvas: this.canvas, antialias: true, alpha: true});
+    const context = canvas.getContext("webgl2");
+    this.renderer = new THREE.WebGL1Renderer({canvas: this.canvas, antialias: true, alpha: true, context: context});
     const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
     this.renderer.setPixelRatio(DPR);
     this.renderer.setSize(this.screenDimensions.width, this.screenDimensions.height);

@@ -19,9 +19,13 @@ export default function OrthCube(scene) {
   this.onAppDidUpdate = (oldProps, oldState, newProps, newState) => {
     if(newState.cubeIsAdded) {
       // set up cube sides
-      const {cube, geo} = create_perspective_cube_mesh();
-      const perspective_plane = setup_perspective_cube_plane()
-      scene.add(perspective_plane);
+      const {cube, geometry} = create_perspective_cube_mesh();
+      const perspective_plane = setup_perspective_cube_plane();
+      const {lines, planes} = create_perspective_cube_objects(cube, geometry);
+      const cube_objects = [perspective_plane, cube, lines, ...planes];
+      cube_objects.map(obj => {
+        scene.add(obj);
+      })
     }
   };
 
@@ -41,6 +45,7 @@ const create_perspective_cube_mesh = () => {
   cube.rotation.x = 0;
   cube.rotation.y = 0;
   cube.rotation.z = 0;
+  cube.name = "cube"
 
   return {cube, geometry};
 }
@@ -70,20 +75,20 @@ const setup_perspective_cube_plane = () => {
   if(orientation === "x"){
     perspective_plane.rotation.x = 0;
     perspective_plane.rotation.y = Math.PI / 2;
-    perspective_plane.rotation.z = Math.PI / 2;
+    perspective_plane.rotation.z = -Math.PI / 2;
     perspective_plane.position.x = 0.1 / 2;
   }
 
   return perspective_plane;
 }
 
-const create_and add_perspective_cube_objects = cube => {
-  const edges = new THREE.EdgesGeometry(cube);
+const create_perspective_cube_objects = (cube, geometry) => {
+  const edges = new THREE.EdgesGeometry(geometry);
   const lines = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
     color: 0xffffff
   }))
 
-  const colors = ["#ff0000", "#00ff00", "#0000ff"];
+  const colors = [0xff0000, 0x00ff00, 0x0000ff];
 
   const planes_material = colors.map(color => {
     return new THREE.MeshBasicMaterial({
@@ -95,5 +100,23 @@ const create_and add_perspective_cube_objects = cube => {
     })
   })
 
-  return { lines, ...planes }
+  const planes_geometry = new THREE.PlaneBufferGeometry(0.1, 0.1);
+
+  const planes = planes_material.map(material => {
+    return new THREE.Mesh(planes_geometry, material)
+  })
+
+  planes[0].rotation.y = Math.PI / 2;
+  planes[0].position.x = (1.01 * 0.1) / 2;
+  planes[0].name = "red plane";
+
+  planes[1].rotation.x = -Math.PI / 2;
+  planes[1].position.y = (1.01 * 0.1) / 2;
+  planes[1].name = "green plane";
+
+  planes[2].rotation.y = 0;
+  planes[2].position.z = (1.01 * 0.1) / 2;
+  planes[2].name = "blue plane";
+
+  return { lines, planes }
 }

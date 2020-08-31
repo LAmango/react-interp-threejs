@@ -28,11 +28,11 @@ class App extends React.Component {
   render() {
     console.log(this.sm)
         return(
-            <div className="w-full h-full flex">
-              <div className="w-1/6 bg-gray-500">polygons
+            <div className="w-full h-full flex flex-col">
+              <div className="w-full h-40 bg-gray-500">polygons
                 <button onClick={this.addCube}>Add cube</button>
               </div>
-              <div className="w-5/6">
+              <div className="w-full h-full">
                 <div ref={element => this.containerElement = element} className="w-full h-full"/>
               </div>
             </div>

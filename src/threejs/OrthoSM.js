@@ -13,9 +13,10 @@ export class OrthoSM extends SceneManager {
   }
 
   setUpCamera = (canvas) => {
-    const camera = new THREE.OrthographicCamera(-1,1, canvas.width/canvas.height, -canvas.width/canvas.height, 0, 1000)
+    const camera = new THREE.OrthographicCamera(-1,1, canvas.offsetWidth/canvas.offsetHeight, -canvas.offsetWidth/canvas.offsetHeight, 0, 1000)
     camera.position.fromArray([1,1,1]);
     camera.up.fromArray([0,0,1]);
+    camera.lookAt(0,0,0)
     return camera;
   };
 
